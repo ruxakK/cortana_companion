@@ -7,7 +7,6 @@ import logging
 from livekit.plugins.speechmatics import TurnDetectionMode, SpeakerIdentifier
 from livekit.plugins import speechmatics as speechmatics_livekit
 from typing import Any
-from langchain_community.tools import DuckDuckGoSearchRun
 
 load_dotenv(".env.local")
 
@@ -77,17 +76,3 @@ async def assign_name_2_speaker_ids(runcontext: RunContext, label_id: str, name:
     except Exception as e:
         logging.error(f"Error capturing speaker IDs: {e}")
         return "An error occurred while capturing speaker IDs."
-
-@function_tool()   
-async def search_web(
-    query: str) -> str:
-    """
-    Search the web using DuckDuckGo.
-    """
-    try:
-        results = DuckDuckGoSearchRun().run(tool_input=query)
-        logging.info(f"Search results for '{query}': {results}")
-        return results
-    except Exception as e:
-        logging.error(f"Error searching the web for '{query}': {e}")
-        return f"An error occurred while searching the web for '{query}'."  
